@@ -31,7 +31,7 @@ exports.singIn = async function(req, res, next) {
     if (user.length > 0) {
         const validPassword = await helpers.matchPassword(auth.password, user[0].password);
         if (validPassword) {
-            const token = jwt.sign(payload, 'secretkey', {
+            const token = jwt.sign({_id: user[0].id}, 'secretkey', {
                 expiresIn: 1440
             });
 
