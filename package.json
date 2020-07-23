@@ -4,23 +4,28 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "dev": "nodemon src/index.js"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "dev": "nodemon src"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/OscarRoman1230/Api-Purebas.git"
   },
   "keywords": [],
   "author": "",
   "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/OscarRoman1230/Api-Purebas/issues"
+  },
+  "homepage": "https://github.com/OscarRoman1230/Api-Purebas#readme",
   "dependencies": {
     "bcryptjs": "^2.4.3",
-    "connect-flash": "^0.1.1",
+    "body-parser": "^1.19.0",
+    "cors": "^2.8.5",
     "express": "^4.17.1",
-    "express-mysql-session": "^2.1.4",
-    "express-session": "^1.17.1",
-    "express-validator": "^6.6.0",
+    "jsonwebtoken": "^8.5.1",
     "morgan": "^1.10.0",
-    "mysql": "^2.18.1",
-    "passport": "^0.4.1",
-    "passport-local": "^1.0.0",
-    "timeago.js": "^4.0.2"
+    "mysql": "^2.18.1"
   },
   "devDependencies": {
     "nodemon": "^2.0.4"

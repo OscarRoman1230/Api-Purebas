@@ -1,28 +1,24 @@
 const express = require('express');
+const bodyParser = require('body-parser'); 
 const morgan = require('morgan');
-const path = require('path');
 
-// Initializacion
+// Initialization 
 const app = express();
 
-// Setings
-app.set('port', process.env.PORT || 4000);
-
 // Middlewares
-app.use(morgan('dev'));
-app.use(express.urlencoded({extended: false}));
 app.use(express.json());
+app.use(morgan('dev'));
+app.use(bodyParser.urlencoded({extended: false}));
+app.use(bodyParser.json());
 
-// Global Variables
-
+// Connection Data Base
+require('./database');
 
 // Routes
-app.use(require('./routes/login'));
+app.use('/api/users', require('./routes/User'));
+app.use('/api/auth', require('./routes/Auth'));
 
-// Public
 
-// Starting the server
+app.listen(4000);
 
-app.listen(app.get('port'), () => {
-    console.log('server on port ', app.get('port'));
-});
+console.log('server on port', 4000);
