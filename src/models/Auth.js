@@ -12,12 +12,12 @@ exports.singUp = async function(req, res, next){
     }
     const user = await pool.query('SELECT * FROM users WHERE email = ?', newUser.email);
     if (user.length !== 0) {
-        return res.json({message: 'this user already exist in the system'});
+        return res.json({message: 'this user already exist in the system', status: 2});
     }
     newUser.password = await helpers.encryptPassword(req.body.password);
     const result = await pool.query('INSERT INTO users SET ?', newUser);
 
-    return res.json({message: 'user has created', result: result});
+    return res.json({message: 'user has created', result: result, status: 1});
 }
 
 exports.singIn = async function(req, res, next) {
@@ -34,12 +34,11 @@ exports.singIn = async function(req, res, next) {
             const token = jwt.sign({_id: user[0].id}, 'secretkey', {
                 expiresIn: 1440
             });
-
-            return res.json({token: token, message: 'auth is successful'});
+            return res.json({token: token, user: user[0], message: 'auth is successful', status: 1});
         } else {
-            return res.json({message: 'password or email is incorrect'});
+            return res.json({message: 'password or email is incorrect', status: 2});
         }
     } else {
-        return res.json({message: 'The email does not exists'});
+        return res.json({message: 'The email does not exists', status: 2});
     }
 }
