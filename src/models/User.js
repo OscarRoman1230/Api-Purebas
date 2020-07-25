@@ -59,7 +59,7 @@ exports.disableUser = async function(req, res, next) {
 exports.enableUser = async function(req, res, next) {
     const {email} = req.params;
     const disable = {
-        estado: 'activo'
+        estado: req.body.estado
     };
     const user = await pool.query('SELECT * FROM users WHERE email = ?', email);
     if(user.length > 0) {
