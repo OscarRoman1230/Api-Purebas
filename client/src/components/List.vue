@@ -120,7 +120,7 @@ export default {
       option: null,
       cart: [],
       valorT: 0,
-      url: 'http://localhost:4000/api'
+      url: '/api'
     }
   },
   methods: {
