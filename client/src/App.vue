@@ -6,11 +6,6 @@
       <b-collapse id="nav-collapse" is-nav>
         <b-navbar-nav>
         </b-navbar-nav>
-
-        <!-- Right aligned nav items -->
-        <b-navbar-nav class="ml-auto">
-          <b-button variant="outline-light"><i class="fas fa-shopping-cart"></i></b-button>
-        </b-navbar-nav>
       </b-collapse>
     </b-navbar>
     <router-view/>

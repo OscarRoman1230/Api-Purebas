@@ -5,7 +5,7 @@ import router from './router/index';
 import axios from 'axios';
 import VueAxios from 'vue-axios';
 
-require('../node_modules/bootstrap/dist/css/bootstrap.css');
+require('./assets/css/cssB.css');
 require('../node_modules/bootstrap/dist/js/bootstrap.js');
 require('../node_modules/@fortawesome/fontawesome-free/css/all.css');
 require('../node_modules/@fortawesome/fontawesome-free/js/all.js');

@@ -25,6 +25,7 @@ app.use('/api/users', require('./routes/User'));
 app.use('/api/auth', require('./routes/Auth'));
 app.use('/api/products', require('./routes/Products'));
 app.use('/api/categories', require('./routes/Categories'));
+app.use('/api/sale', require('./routes/Sales'));
 
 // Handle production
 if (process.env.NODE_ENV === 'production') {
