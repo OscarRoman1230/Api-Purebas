@@ -13,6 +13,10 @@ exports.singUp = async function(req, res, next){
     }
     const newCompany = {
         name: req.body.company,
+        nit: req.body.nit,
+        phone: req.body.phone,
+        address: req.body.address,
+        email: req.body.emailCompany,
         createdAt: new Date()
     }
 
