@@ -1,10 +1,10 @@
 const express = require('express');
-const bodyParser = require('body-parser'); 
+const bodyParser = require('body-parser');
 const morgan = require('morgan');
 const path = require('path');
 const cors = require('cors');
 
-// Initialization 
+// Initialization
 const app = express();
 
 // Settings
@@ -21,11 +21,11 @@ app.use(cors());
 require('./database');
 
 // Routes
-app.use('/api/users', require('./routes/User'));
+app.use('/api/users', require('./routes/UserHistory'));
 app.use('/api/auth', require('./routes/Auth'));
-app.use('/api/products', require('./routes/Products'));
-app.use('/api/categories', require('./routes/Categories'));
-app.use('/api/sale', require('./routes/Sales'));
+app.use('/api/products', require('./routes/Tickets'));
+app.use('/api/projects', require('./routes/Projects'));
+app.use('/api/sale', require('./routes/TicketStatus'));
 
 // Handle production
 if (process.env.NODE_ENV === 'production') {
