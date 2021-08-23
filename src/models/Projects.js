@@ -3,7 +3,7 @@ const pool = require('../database');
 exports.getProjects = async function(req, res, next){
     const companyId = req.params.id;
     const data = await pool.query('SELECT * FROM projects WHERE companyId = ? AND deletedAt = null', companyId);
-    res.json({data: data, message: 'all products'});
+    res.json({data: data, message: 'all projects'});
 }
 
 exports.createProject = async function(req, res, next){

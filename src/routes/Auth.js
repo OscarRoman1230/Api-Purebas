@@ -6,6 +6,6 @@ const auth = require('../models/Auth');
 router.post('/singup', auth.singUp);
 
 // auth user system
-router.post('/signin', auth.singIn);
+router.post('/singin', auth.singIn);
 
 module.exports = router;

@@ -7,7 +7,7 @@ exports.singUp = async function(req, res, next){
     const newUser = {
         email: req.body.email,
         password: '',
-        fullName: req.body.fullname,
+        fullName: req.body.fullName,
         companyId: '',
         createdAT: new Date()
     }
@@ -24,12 +24,15 @@ exports.singUp = async function(req, res, next){
     if (user.length !== 0) {
         return res.json({message: 'this user already exist in the system', status: 2});
     }
-    const company = await pool.query('SELECT * FROM company WHERE name = ?', newCompany.name);
+    const company = await pool.query('SELECT * FROM company WHERE nit = ?', newCompany.nit);
     if (company.length !== 0) {
         return res.json({message: 'this company already exist in the system', status: 2});
     }
-    await pool.query('INSERT INTO company SET ?', newCompany);
-    const myCompany = await pool.query('SELECT * FROM company WHERE name = ?', newCompany.name);
+    const resultC = await pool.query('INSERT INTO company SET ?', newCompany);
+    const myCompany = await pool.query('SELECT * FROM company WHERE nit = ?', newCompany.nit);
+    console.log(resultC)
+    console.log(myCompany)
+    console.log(myCompany[0])
     newUser.password = await helpers.encryptPassword(req.body.password);
     newUser.companyId = myCompany[0].id;
     const result = await pool.query('INSERT INTO users SET ?', newUser);

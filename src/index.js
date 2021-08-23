@@ -21,11 +21,12 @@ app.use(cors());
 require('./database');
 
 // Routes
-app.use('/api/users', require('./routes/UserHistory'));
+app.use('/api/user-history', require('./routes/UserHistory'));
 app.use('/api/auth', require('./routes/Auth'));
-app.use('/api/products', require('./routes/Tickets'));
+app.use('/api/tickets', require('./routes/Tickets'));
 app.use('/api/projects', require('./routes/Projects'));
-app.use('/api/sale', require('./routes/TicketStatus'));
+app.use('/api/ticket-status', require('./routes/TicketStatus'));
+app.use('/api/tickets-comments', require('./routes/TicketsComments'));
 
 // Handle production
 if (process.env.NODE_ENV === 'production') {
