@@ -2,7 +2,8 @@ const pool = require('../database');
 
 exports.getProjects = async function(req, res, next){
     const companyId = req.params.id;
-    const data = await pool.query('SELECT * FROM projects WHERE companyId = ? AND deletedAt = null', companyId);
+    console.log(companyId);
+    const data = await pool.query(`SELECT * FROM projects WHERE companyId = ${companyId} AND deletedAt IS NULL`);
     res.json({data: data, message: 'all projects'});
 }
 
@@ -23,7 +24,7 @@ exports.updateProject = async function(req, res, next){
         updatedAt: new Date(),
         companyId: req.body.companyId
     }
-    const result = await pool.query('UPDATE projects SET ? WHERE id = ?', updateProject, id);
+    const result = await pool.query('UPDATE projects SET ? WHERE id = ?', [updateProject, id]);
     res.json({res: result, message: 'updating project'});
 }
 
