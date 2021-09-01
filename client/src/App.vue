@@ -19,11 +19,11 @@
       >
         <v-list>
           <v-list-item link>
-            <v-list-item-content>
-              <v-list-item-title class="text-h6">
+            <v-list-item-content v-if="user">
+              <v-list-item-title v-if="user.fullName" class="text-h6">
                 {{ user.fullName }}
               </v-list-item-title>
-              <v-list-item-subtitle>{{ user.email }}</v-list-item-subtitle>
+              <v-list-item-subtitle v-if="user.email">{{ user.email }}</v-list-item-subtitle>
             </v-list-item-content>
           </v-list-item>
         </v-list>
