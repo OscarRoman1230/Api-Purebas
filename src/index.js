@@ -21,12 +21,8 @@ app.use(cors());
 require('./database');
 
 // Routes
-app.use('/api/user-history', require('./routes/UserHistory'));
 app.use('/api/auth', require('./routes/Auth'));
-app.use('/api/tickets', require('./routes/Tickets'));
-app.use('/api/projects', require('./routes/Projects'));
-app.use('/api/ticket-status', require('./routes/TicketStatus'));
-app.use('/api/tickets-comments', require('./routes/TicketsComments'));
+app.use('/api/publications', require('./routes/Publications'));
 
 // Handle production
 if (process.env.NODE_ENV === 'production') {

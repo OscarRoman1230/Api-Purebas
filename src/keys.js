@@ -1,10 +1,10 @@
 module.exports = {
 
     database: {
-        host:'bkzwlxqz61ryd24tumup-mysql.services.clever-cloud.com' || process.env.HOST,
-        user:'usabhxarknqo2onm' || process.env.USER,
-        password:'drJBlmbQEXLN4xJKq4UO' || process.env.PASSWORD,
-        database: 'bkzwlxqz61ryd24tumup' || process.env.DATABASE
+        host:'bbxsodejpo2aox5q9bwt-mysql.services.clever-cloud.com' || process.env.HOST,
+        user:'uqgg37y7cbsuj4rf' || process.env.USER,
+        password:'ETagdv8HiSarLN5WpnZ8' || process.env.PASSWORD,
+        database: 'bbxsodejpo2aox5q9bwt' || process.env.DATABASE
     }
 
 };

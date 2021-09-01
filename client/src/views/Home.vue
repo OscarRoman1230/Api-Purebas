@@ -1,18 +1,18 @@
 <template>
   <div>
     <v-container>
-      <list-projects />
+      <list-publications />
     </v-container>
   </div>
 </template>
 
 <script>
-import listProjects from "../components/project/listProjects";
+import listPublications from "../components/publications/listPublications";
 
 export default {
   name: 'Home',
   components: {
-    listProjects
+    listPublications
   }
 }
 </script>

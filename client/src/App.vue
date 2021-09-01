@@ -1,21 +1,33 @@
 <template>
-  <v-app>
+  <v-app style="background: #e0e0e0">
     <div v-if="loggedIn()">
       <v-app-bar
+          app
           color="dark accent-4"
           dark
       >
         <v-app-bar-nav-icon @click.stop="drawer = !drawer"></v-app-bar-nav-icon>
-        <v-toolbar-title>My files</v-toolbar-title>
       </v-app-bar>
       <v-navigation-drawer
           v-model="drawer"
           class="dark accent-4"
+          app
           absolute
           dark
           bottom
           temporary
       >
+        <v-list>
+          <v-list-item link>
+            <v-list-item-content>
+              <v-list-item-title class="text-h6">
+                {{ user.fullName }}
+              </v-list-item-title>
+              <v-list-item-subtitle>{{ user.email }}</v-list-item-subtitle>
+            </v-list-item-content>
+          </v-list-item>
+        </v-list>
+        <v-divider />
         <v-list
             nav
             dense
@@ -29,7 +41,7 @@
           </v-list-item-group>
         </v-list>
         <template v-slot:append>
-          <div class="pa-2">
+          <div>
             <v-btn color="blue" dark block @click="logout()">
               Logout
             </v-btn>
@@ -37,7 +49,9 @@
         </template>
       </v-navigation-drawer>
       <v-container>
-        <router-view/>
+        <v-content>
+          <router-view/>
+        </v-content>
       </v-container>
     </div>
     <div v-if="!loggedIn()">
@@ -52,9 +66,10 @@ export default {
   data: () => ({
     drawer: false,
     routes: [
-      {title: 'Proyectos', link: '/home'},
-      {title: 'Estados de tickets', link: '/ticket-status'}
-    ]
+      {title: 'Inicio', link: '/home'},
+      {title: 'Mis Publicaciones', link: '/my-published'}
+    ],
+    user: JSON.parse(localStorage.getItem('user'))
   }),
   methods: {
     loggedIn () {

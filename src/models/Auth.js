@@ -2,45 +2,26 @@ const pool = require('../database');
 const helpers = require('../lib/helpers');
 const jwt = require('jsonwebtoken');
 
-exports.singUp = async function(req, res, next){
+exports.signUp = async function(req, res, next){
 
     const newUser = {
         email: req.body.email,
         password: '',
         fullName: req.body.fullName,
-        companyId: '',
         createdAT: new Date()
-    }
-    const newCompany = {
-        name: req.body.company,
-        nit: req.body.nit,
-        phone: req.body.phone,
-        address: req.body.address,
-        email: req.body.emailCompany,
-        createdAt: new Date()
     }
 
     const user = await pool.query('SELECT * FROM users WHERE email = ?', newUser.email);
     if (user.length !== 0) {
         return res.json({message: 'this user already exist in the system', status: 2});
     }
-    const company = await pool.query('SELECT * FROM company WHERE nit = ?', newCompany.nit);
-    if (company.length !== 0) {
-        return res.json({message: 'this company already exist in the system', status: 2});
-    }
-    const resultC = await pool.query('INSERT INTO company SET ?', newCompany);
-    const myCompany = await pool.query('SELECT * FROM company WHERE nit = ?', newCompany.nit);
-    console.log(resultC)
-    console.log(myCompany)
-    console.log(myCompany[0])
     newUser.password = await helpers.encryptPassword(req.body.password);
-    newUser.companyId = myCompany[0].id;
     const result = await pool.query('INSERT INTO users SET ?', newUser);
 
     return res.json({message: 'user has created', result: result, status: 1});
 }
 
-exports.singIn = async function(req, res, next) {
+exports.signIn = async function(req, res, next) {
     const auth = {
         email: req.body.email,
         password: req.body.password
@@ -59,6 +40,6 @@ exports.singIn = async function(req, res, next) {
             return res.json({message: 'password or email is incorrect', status: 2});
         }
     } else {
-        return res.json({message: 'The email does not exists', status: 2});
+        return res.json({message: 'The user does not exists', status: 2});
     }
 }

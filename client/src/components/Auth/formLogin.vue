@@ -1,6 +1,6 @@
 <template>
   <section>
-    <v-container>
+    <v-container class="mt-5">
       <v-card v-if="show" class="mx-auto my-auto" width="300px">
         <v-card-title>Iniciar Sesión</v-card-title>
         <form @submit.prevent="login()">
@@ -64,55 +64,6 @@
                     required
                 />
               </v-col>
-              <v-col md="12">
-                <v-text-field
-                    v-model="formRegister.company"
-                    outlined
-                    label="Nombre Compañia"
-                    type="text"
-                    required
-                />
-              </v-col>
-              <v-col md="6">
-                <v-text-field
-                    v-model="formRegister.nit"
-                    outlined
-                    label="Nit"
-                    onkeypress="return event.charCode >= 48 && event.charCode <= 57"
-                    type="text"
-                    maxlength="11"
-                    required
-                />
-              </v-col>
-              <v-col md="6">
-                <v-text-field
-                    v-model="formRegister.phone"
-                    outlined
-                    label="Teléfono"
-                    onkeypress="return event.charCode >= 48 && event.charCode <= 57"
-                    type="text"
-                    maxlength="10"
-                    required
-                />
-              </v-col>
-              <v-col md="6">
-                <v-text-field
-                    v-model="formRegister.address"
-                    outlined
-                    label="Dirección compañia"
-                    type="text"
-                    required
-                />
-              </v-col>
-              <v-col md="6">
-                <v-text-field
-                    v-model="formRegister.emailCompany"
-                    outlined
-                    label="Correo Electronico Compañia"
-                    type="email"
-                    required
-                />
-              </v-col>
             </v-row>
             <v-card-actions>
               <v-btn color="grey" dark @click="loginForm()">Iniciar sesión</v-btn>
@@ -120,6 +71,38 @@
             </v-card-actions>
           </v-container>
         </form>
+      </v-card>
+
+    </v-container>
+    <v-container>
+      <v-card class="mx-auto" width="300px" color="transparent">
+        <v-alert
+            v-if="alertSuccess"
+            border="left"
+            dismissible
+            dense
+            type="success"
+        >
+          {{ alertSuccess }}
+        </v-alert>
+        <v-alert
+            v-if="alertError"
+            border="left"
+            dismissible
+            dense
+            type="error"
+        >
+          {{ alertError }}
+        </v-alert>
+        <v-alert
+            v-if="alertWarning"
+            border="left"
+            dismissible
+            dense
+            type="warning"
+        >
+          {{ alertWarning }}
+        </v-alert>
       </v-card>
     </v-container>
   </section>
@@ -129,6 +112,9 @@
 export default {
   name: "formLogin",
   data: () => ({
+    alertSuccess: '',
+    alertError: '',
+    alertWarning: '',
     form: {
       email: '',
       password: ''
@@ -136,12 +122,7 @@ export default {
     formRegister: {
       fullName: '',
       email: '',
-      password: '',
-      company: '',
-      nit: '',
-      phone: '',
-      address: '',
-      emailCompany: ''
+      password: ''
     },
     show: true,
     url: '/api'
@@ -157,37 +138,44 @@ export default {
       this.formRegister.fullName = ''
       this.formRegister.email = ''
       this.formRegister.password = ''
-      this.formRegister.company = ''
-      this.formRegister.nit = ''
-      this.formRegister.phone = ''
-      this.formRegister.address = ''
-      this.formRegister.emailCompany = ''
     },
     register () {
-      if (this.formRegister.email !== '' && this.formRegister.password !== ''
-          && this.formRegister.company !== '' && this.formRegister.nit !== '') {
-        this.axios.post(`${this.url}/auth/singup`, this.formRegister).then(
+      if (this.formRegister.email !== '' && this.formRegister.password !== '') {
+        this.axios.post(`${this.url}/auth/sign-up`, this.formRegister).then(
             (res) => {
               console.log(res.data);
-              this.loginForm();
-            }).catch((err) => {
-              console.log(err);
-            });
-      }
-    },
-    login () {
-      if (this.form.email !== '' && this.form.password !== '') {
-        this.axios.post(`${this.url}/auth/singin`, this.form).then(
-            (res) => {
-              console.log(res.data);
-              if (res.data.status === 1) {
-                this.$router.push({path: '/home'});
-                localStorage.setItem('token', res.data.token);
-                localStorage.setItem('company', res.data.user.companyId);
+              if (res.data.status === 2) {
+                this.alertError = res.data.message;
+              } else if (res.data.status === 1) {
+                this.alertSuccess = res.data.message;
+                this.loginForm();
               }
             }).catch((err) => {
               console.log(err);
             });
+      } else {
+        this.alertWarning = 'please complete text fields'
+      }
+    },
+    login () {
+      if (this.form.email !== '' && this.form.password !== '') {
+        this.axios.post(`${this.url}/auth/sign-in`, this.form).then(
+            (res) => {
+              console.log(res.data);
+              if (res.data.status === 1) {
+                this.alertSuccess = res.data.message;
+                localStorage.setItem('token', res.data.token);
+                localStorage.setItem('user', JSON.stringify(res.data.user));
+                this.$router.push({path: '/home'});
+              } else if (res.data.status === 2) {
+                this.alertError = res.data.message;
+                this.form.password = '';
+              }
+            }).catch((err) => {
+              console.log(err);
+            });
+      } else {
+        this.alertWarning = 'please insert password or email'
       }
     }
   }
